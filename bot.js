@@ -71,7 +71,7 @@ function onMessageHandler (target, context, msg, self) {
         return;
     }
 
-    //else, if word contains =, send it without the =
+    //else, if word contains %, send it without the %
     else if (commandName.includes("%") === true){
         const word2 = word(commandName);
         client.say(target, `${word2}`);
@@ -182,7 +182,7 @@ function onMessageHandler (target, context, msg, self) {
 
 function word(word)
 {
-    //remove =
+    //remove %
     return word.replace("%", "").trim();
     //return word.substring(0, word.length - 1);
 }
