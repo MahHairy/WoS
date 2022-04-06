@@ -176,6 +176,18 @@ function onMessageHandler (target, context, msg, self) {
 
      //
 
+        //Words on Stream commands
+    else if(command === 'woscommands'){
+        client.say(target,`➡️ !wos : mirror link`)
+        client.say(target,`➡️ !continue : continue the game`)
+        client.say(target,`➡️ !restart : restart the game`)
+        client.say(target,`➡️ !define word : Oxford Dictionary defines the word`)
+        client.say(target,`➡️ word% : 100Hairy types the word`)
+        client.say(target,`➡️ word= : EquallyHairy types the word`)
+        client.say(target,`➡️ word* : StarrilyHairy types the word`)
+
+    }
+
 
 
 }
