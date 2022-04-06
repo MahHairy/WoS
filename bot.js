@@ -183,7 +183,7 @@ function onMessageHandler (target, context, msg, self) {
 function word(word)
 {
     //remove =
-    return word.replace("%*", "").trim();
+    return word.replace("%", "").trim();
     //return word.substring(0, word.length - 1);
 }
 
