@@ -2,6 +2,9 @@ require ('dotenv').config();
 const tmi = require('tmi.js');
 const https = require('https');
 
+
+
+
 // Define configuration options
 const opts = {options: { debug: true },
     connection: {
@@ -69,112 +72,118 @@ function onMessageHandler (target, context, msg, self) {
     }
 
     //else, if word contains =, send it without the =
-    else if (commandName.includes("*") === true){
+    else if (commandName.includes("%") === true){
         const word2 = word(commandName);
         client.say(target, `${word2}`);
     }
+     //big word
+        else if (commandName.includes(";") === true){
+            const word3 = bigWord(commandName);
+            biggestWord = word3;
+            i++;
+            if (L === 'EN')
+                if (i % 2 === 1)
+                    client.say(target, `${biggestWord} are  the ONLY VALID letters`);
 
-    else if (commandName.includes(";") === true){
-        const word3 = bigWord(commandName);
-        biggestWord = word3;
-        i++;
-        if (L === 'EN')
-            if (i % 2 === 1)
-                client.say(target, `${biggestWord} are  the ONLY VALID letters`);
+                else if (i % 2 === 0)
+                    client.say(target, `${biggestWord} are the ONLY VALID letters`);
 
-            else if (i % 2 === 0)
-                client.say(target, `${biggestWord} are the ONLY VALID letters`);
-
-        if (L === 'PT')
-            client.say(target, `${word3} são as ÚNICAS letras VÁLIDAS`);
-    }
-
-    else if (commandName.includes('lw'))
-    {
-        i++;
-        if (L === 'EN')
-            if (i % 2 === 1)
-                client.say(target, `${biggestWord} are  the ONLY VALID letters`);
-        
-            else if (i % 2 === 0)
-                client.say(target, `${biggestWord} are the ONLY VALID letters`);
+            if (L === 'PT')
+                client.say(target, `${word3} são as ÚNICAS letras VÁLIDAS`);
+        }
 
 
+        else if (commandName.includes('lw'))
+        {
+            i++;
+            if (L === 'EN')
+                if (i % 2 === 1)
+                    client.say(target, `${biggestWord} are  the ONLY VALID letters`);
 
-
-        if (L === 'PT')
-            client.say(target, `${biggestWord} são  as ÚNICAS letras VÁLIDAS`);
-    }
-
-
-    else if(command === 'define') {
-        console.log("Input: " + args)
-        console.log("Command Name: " + command)
-        //client.say(target, `you said: "${args/*.join(' ')*/}"`);
-        https.get(options, (resp) => {
-            let body = '';
-            resp.on('data', (d) => {
-                body += d;
-            });
-            resp.on('end', () => {
-                let parsed = JSON.parse(body);
-                let def = 1;
-
-                if(parsed.results == undefined)
-                {
-                    console.log("Maybe try to define an actual word, idk")
-                    client.say(target, `"${wordId}" has neither a definition nor is a derivative of any other word. Maybe try to define an actual word next time, idk`)
-                }
-
-
-                else if (parsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions == undefined) {
-                    wordNotDefined = parsed.id
-                    derivativeOf = parsed.results[0].lexicalEntries[0].derivativeOf[0].id
-                    console.log("\"" + wordNotDefined + "\"" + " has no definition, but is a derivative of " + "\"" + derivativeOf + "\". " + "Find the definition of " + "\"" + derivativeOf + "\"" + " instead.");
-                    client.say(target, `"${wordNotDefined}" has no definition, but is a derivative of "${derivativeOf}". Find the definition of "${derivativeOf}" instead.`)
-
-
-                }
+                else if (i % 2 === 0)
+                    client.say(target, `${biggestWord} are the ONLY VALID letters`);
 
 
 
-                else{
-                    //let definition;
-                parsed.results.forEach(result => {
-                    result.lexicalEntries.forEach(lexicalEntry => {
-                        lexicalEntry.entries[0].senses.forEach(sense => {
-                            
-                            //{definition += " 🧠 definition " + def +  " (" + lexicalEntry.lexicalCategory.id + ")" + ": " + sense.definitions[0]}
-                            if (sense.definitions != undefined)
-                            {
-                                console.log("definition " + def + " of " + "\"" + result.word + "\"" + " " + "(" + lexicalEntry.lexicalCategory.id + ")" + ": " + sense.definitions[0])
-                                client.say(target, `definition ${def} of "${result.word}" (${lexicalEntry.lexicalCategory.id}): ${sense.definitions[0]}`) 
-                            }
-                            else
-                            {
-                                console.log("Couldn't find any more definitions for \"" + result.id + "\".")
-                            }
 
-                            def++
+            if (L === 'PT')
+                client.say(target, `${biggestWord} são  as ÚNICAS letras VÁLIDAS`);
+        }
+
+      //define command
+        else if(command === 'define') {
+            console.log("Input: " + args)
+            console.log("Command Name: " + command)
+
+            https.get(options, (resp) => {
+                let body = '';
+                resp.on('data', (d) => {
+                    body += d;
+                });
+                resp.on('end', () => {
+                    let parsed = JSON.parse(body);
+                    let def = 1;
+
+                    if(parsed.results == undefined)
+                    {
+                        console.log("Maybe try to define an actual word, idk")
+                        client.say(target, `"${wordId}" has neither a definition nor is a derivative of any other word. Maybe try to define an actual word next time, idk`)
+                    }
+
+
+                    else if (parsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions == undefined) {
+                        wordNotDefined = parsed.id
+                        derivativeOf = parsed.results[0].lexicalEntries[0].derivativeOf[0].id
+                        console.log("\"" + wordNotDefined + "\"" + " has no definition, but is a derivative of " + "\"" + derivativeOf + "\". " + "Find the definition of " + "\"" + derivativeOf + "\"" + " instead.");
+                        client.say(target, `"${wordNotDefined}" has no definition, but is a derivative of "${derivativeOf}". Find the definition of "${derivativeOf}" instead.`)
+
+
+                    }
+
+
+
+                    else{
+                        //let definition;
+                    parsed.results.forEach(result => {
+                        result.lexicalEntries.forEach(lexicalEntry => {
+                            lexicalEntry.entries[0].senses.forEach(sense => {
+
+                                //{definition += " 🧠 definition " + def +  " (" + lexicalEntry.lexicalCategory.id + ")" + ": " + sense.definitions[0]}
+                                if (sense.definitions != undefined)
+                                {
+                                    console.log("definition " + def + " of " + "\"" + result.word + "\"" + " " + "(" + lexicalEntry.lexicalCategory.id + ")" + ": " + sense.definitions[0])
+                                    client.say(target, `definition ${def} of "${result.word}" (${lexicalEntry.lexicalCategory.id}): ${sense.definitions[0]}`)
+                                }
+                                else
+                                {
+                                    console.log("Couldn't find any more definitions for \"" + result.id + "\".")
+                                }
+
+                                def++
+                            })
+
                         })
 
                     })
+                        //client.say(target, `${definition}`)
 
-                })
-                    //client.say(target, `${definition}`)
+                }
+                    //client.say(target, `${parsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}`);
 
-            }
-                //client.say(target, `${parsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}`);
-                
+                });
             });
-        });
-    }
+        }
+
+     //
+
+
+
 }
 
 function word(word)
 {
     //remove =
-    return word.replace("*", "").trim();
+    return word.replace("%*", "").trim();
     //return word.substring(0, word.length - 1);
 }
 
