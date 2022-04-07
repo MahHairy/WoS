@@ -185,6 +185,8 @@ function onMessageHandler (target, context, msg, self) {
         client.say(target,`➡️ word% : @100Hairy types the word`)
         client.say(target,`➡️ word= : @EquallyHairy types the word`)
         client.say(target,`➡️ word* : @StarrilyHairy types the word`)
+        client.say(target,`➡️ word; : word with letters spaced out and capitalized, like W O R D`)
+        client.say(target,`➡️ lw : word with letters spaced out and capitalized, but only after the "word;" command has been used for that word`)
 
     }
 
