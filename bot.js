@@ -132,11 +132,19 @@ function onMessageHandler (target, context, msg, self) {
 
 
                     else if (parsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions == undefined) {
-                        wordNotDefined = parsed.id
-                        derivativeOf = parsed.results[0].lexicalEntries[0].derivativeOf[0].id
-                        console.log("\"" + wordNotDefined + "\"" + " has no definition, but is a derivative of " + "\"" + derivativeOf + "\". " + "Find the definition of " + "\"" + derivativeOf + "\"" + " instead.");
-                        client.say(target, `"${wordNotDefined}" has no definition, but is a derivative of "${derivativeOf}". Find the definition of "${derivativeOf}" instead.`)
 
+
+                        if (parsed.results[0].lexicalEntries[0].entries[0].senses[0].shortDefinitions != undefined)
+                        {
+                            console.log("definition of " + "\"" + parsed.word + "\"" + " " + "(" + parsed.results[0].lexicalEntries[0].lexicalCategory.id + ")" + ": " + parsed.results[0].lexicalEntries[0].entries[0].senses[0].shortDefinitions[0])
+                            client.say(target, `definition ${def} of "${parsed.word}" (${parsed.results[0].lexicalEntries[0].lexicalCategory.id}): ${parsed.results[0].lexicalEntries[0].entries[0].senses[0].shortDefinitions[0]}`)
+                        }
+                        else {
+                            wordNotDefined = parsed.id
+                            derivativeOf = parsed.results[0].lexicalEntries[0].derivativeOf[0].id
+                            console.log("\"" + wordNotDefined + "\"" + " has no definition, but is a derivative of " + "\"" + derivativeOf + "\". " + "Find the definition of " + "\"" + derivativeOf + "\"" + " instead.");
+                            client.say(target, `"${wordNotDefined}" has no definition, but is a derivative of "${derivativeOf}". Find the definition of "${derivativeOf}" instead.`)
+                        }
 
                     }
 
