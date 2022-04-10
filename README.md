@@ -33,7 +33,7 @@
 - create a *.env* file based on the *.env.example* file by executing `cp .env.example .env` into the terminal of your IDE
 - edit the values of the variables of your *.env* file according to the template in the *.env.example* file
 
-![image](https://user-images.githubusercontent.com/78240268/162596304-5cf82d5e-3ba1-4623-9d0f-7f1377afbec0.png)
+![image](https://user-images.githubusercontent.com/78240268/162596380-9214f6c6-a87c-4a8e-93e2-c21d0a921a97.png)
 
 ### Deployment
 - execute `node bot.js` into the terminal of your IDE to deploy your bot into the channel specified in the *.env* file
