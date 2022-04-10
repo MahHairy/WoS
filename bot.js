@@ -66,7 +66,7 @@ function onMessageHandler (target, context, msg, self) {
 
 
     //if there's a link, send nothing
-    if(commandName.includes("http") === true || commandName.includes("www") === true || (commandName.length > 9 && (commandName.includes(";") || commandName.includes("%") || commandName.includes("lw")) && command !== "define") || (commandName.length < 5 && (commandName.includes(";") || commandName.includes("%") || commandName.includes("lw")) && command !== "define")){
+    if(commandName.includes("http") === true || commandName.includes("www") === true || (commandName.length > 9 && (commandName.includes(";") || commandName.includes("%") || commandName.includes("lw")) && command !== "define") || (commandName.length < 5 && (commandName.includes(";") || commandName.includes("%")) && command !== "define")){
         //client.say(target, ``);
         return;
     }
