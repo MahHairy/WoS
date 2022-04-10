@@ -66,18 +66,18 @@ function onMessageHandler (target, context, msg, self) {
 
 
     //if there's a link, send nothing
-    if(commandName.includes("http") === true || commandName.includes("www") === true || (commandName.length > 9 && (commandName.includes(";") || commandName.includes("%") || commandName.includes("lw")) && command !== "define") || (commandName.length < 5 && (commandName.includes(";") || commandName.includes("%")) && command !== "define")){
+    if(commandName.includes("http") === true || commandName.includes("www") === true || (commandName.length > 9 && (commandName.endsWith(";") || commandName.endsWith("%") || commandName.startsWith("lw")) && command !== "define") || (commandName.length < 5 && (commandName.endsWith(";") || commandName.endsWith("%")) && command !== "define")){
         //client.say(target, ``);
         return;
     }
 
-    //else, if word contains %, send it without the %
-    else if (commandName.includes("%") === true){
+    //else, if word ends %, send it without the %
+    else if (commandName.endsWith("%") === true){
         const word2 = word(commandName);
         client.say(target, `${word2}`);
     }
-     //big word
-        else if (commandName.includes(";") === true){
+     //else, if word ends with ;, send it with its letters capitalized and spaced out
+        else if (commandName.endsWith(";") === true){
             const word3 = bigWord(commandName);
             biggestWord = word3;
             i++;
@@ -93,7 +93,7 @@ function onMessageHandler (target, context, msg, self) {
         }
 
 
-        else if (commandName.includes('lw'))
+        else if (commandName.startsWith('lw'))
         {
             i++;
             if (L === 'EN')
